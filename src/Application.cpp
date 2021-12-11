@@ -26,6 +26,7 @@ Application::Application()
         return;
     }
 
+    m_Image = loadSurface("HollowKnight.bmp");
 
 }
 
@@ -52,6 +53,8 @@ void Application::update()
 
 void Application::draw()
 {
+    SDL_BlitSurface(m_Image, NULL, m_Surface, NULL);
+
     SDL_UpdateWindowSurface(m_Window);
 }
 

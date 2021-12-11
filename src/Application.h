@@ -1,8 +1,6 @@
 #pragma once
 #include "Core.h"
-#include <SDL.h>
-#include <SDL_image.h>
-#include <SDL_timer.h>
+
 
 
 class Application
@@ -18,6 +16,9 @@ private:
 	SDL_Window* m_Window;
 	SDL_Surface* m_Surface;
 	SDL_Event m_WindowEvent;
+
+	SDL_Surface* m_Image;
+	SDL_Rect m_ImagePosition;
 
 };
 
