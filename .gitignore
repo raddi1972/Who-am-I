@@ -1,0 +1,6 @@
+#removing windows specific directory
+x64/
+*.user
+*.filters
+*.vcxproj
+vendor/
