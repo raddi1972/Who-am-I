@@ -28,6 +28,12 @@ Application::Application()
 
     m_Image = loadSurface("HollowKnight.bmp");
 
+    m_ImagePosition.x = 0;
+    m_ImagePosition.y = 0;
+    m_ImagePosition.h = 83;
+    m_ImagePosition.w = 83;
+
+
 }
 
 
@@ -46,14 +52,14 @@ void Application::update()
             }
             SDL_UpdateWindowSurface(m_Window);
         }
-
+        m_ImagePosition.x += 1;
         draw();
     }
 }
 
 void Application::draw()
 {
-    SDL_BlitSurface(m_Image, NULL, m_Surface, NULL);
+    SDL_BlitSurface(m_Image, NULL, m_Surface, &m_ImagePosition);
 
     SDL_UpdateWindowSurface(m_Window);
 }

@@ -11,9 +11,6 @@ int main(int argc, char* argv[])
     app.update();
     app.draw();
 
-    
-   
-
 
     return 0;
 }

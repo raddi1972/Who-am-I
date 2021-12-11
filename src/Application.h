@@ -10,6 +10,7 @@ public:
 	~Application();
 
 	void update();
+	void loop();
 	void draw();
 
 private:
