@@ -4,7 +4,7 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_timer.h>
-#elif
+#else
 #include "SDL2.framework/Headers/SDL.h"
 #include "SDL2_image.framework/Headers/SDL_image.h"
 #include "SDL2.framework/Headers/SDL_timer.h"
