@@ -1,6 +1,6 @@
 #pragma once
 
-#ifndef WINDOWS_BUILD
+#ifdef WINDOWS_BUILD
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_timer.h>
