@@ -1,6 +1,7 @@
 #pragma once
 #include "Core.h"
 #include "HollowKnight.h"
+#include "Ledge.h"
 #include <chrono>
 
 
@@ -19,11 +20,13 @@ public:
 
 private:
 	
-	HollowKnight hk;
+	std::vector<Object *> objs;
 
 	SDL_Window* m_Window;
 	SDL_Surface* m_Surface;
 	SDL_Event m_WindowEvent;
+
+	Physics ph;
 
 };
 

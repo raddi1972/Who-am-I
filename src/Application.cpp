@@ -1,6 +1,6 @@
 #include "Application.h"
 
-Application::Application()
+Application::Application() : ph()
 {
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
         printf("error initializing SDL: %s\n", SDL_GetError());
@@ -25,7 +25,8 @@ Application::Application()
         std::cout << "SDLError: " << SDL_GetError() << std::endl;
         return;
     }
-
+    objs.push_back(new HollowKnight());
+    objs.push_back(new Ledge({540, 500} , {0}, 1080, 100));
 
 }
 
@@ -37,7 +38,9 @@ void Application::loop()
     {
         while (SDL_PollEvent(&m_WindowEvent) > 0)
         {
-            hk.handle_events(m_WindowEvent);
+            for (auto o : objs) {
+                o->handle_events(m_WindowEvent);
+            }
             switch (m_WindowEvent.type)
             {
                 case SDL_QUIT:
@@ -53,14 +56,19 @@ void Application::loop()
 
 void Application::update(double delta_time)
 {
-    hk.update(delta_time);
+    ph.update(delta_time, objs);
+    for (auto o : objs) {
+        o->update(delta_time);
+    }
 }
 
 void Application::draw()
 {
     SDL_FillRect(m_Surface, NULL, SDL_MapRGB(m_Surface->format, 255, 255, 255));
 
-    hk.draw(m_Surface);
+    for (auto o : objs) {
+        o->draw(m_Surface);
+    }
 
     SDL_UpdateWindowSurface(m_Window);
 }

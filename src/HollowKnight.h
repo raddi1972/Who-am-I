@@ -4,7 +4,7 @@
 #include <iostream>
 #include "Physics.h"
 
-class HollowKnight
+class HollowKnight : public Object
 {
 enum class Direction
 {
@@ -19,16 +19,13 @@ private:
 	double m_MovingRight;
 
 	Direction m_Direction;
-
-	State curState;
-
 public:
 	HollowKnight();
 	~HollowKnight();
 
-	void update(double delta_time);
-	void draw(SDL_Surface* surface);
-	void handle_events(SDL_Event const& event);
+	void update(double delta_time) override;
+	void draw(SDL_Surface* surface) override;
+	void handle_events(SDL_Event const& event) override;
 
 };
 

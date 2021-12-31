@@ -1,30 +1,22 @@
 #pragma once
-
-struct Vec2D {
-	double X, Y;
-};
-
-struct State
-{
-	Vec2D position, velocity, acceleration;
-};
+#include <iostream>
+#include "Object.h"
 
 class Physics
 {
+	double m_fric, m_grav;
+
+	// Dash, move (friction -> opposite acceleration till velocity is there to stop the character even in air)
 public:
-	// Functions for 2D linear motion
-	void getPosition(State &state, double t); // returns updated position and velocity
-	void applyForce(State &state, double force);
-	void applyImpulse(State& state, double impulse);
-	// void CollisionDetector
+
+	Physics();
+	double update(double dt, std::vector<Object*>);
+	double move(double vx);
+	double dash();
+
+	bool detectCollision(const Object& obj1, const Object& obj2);
+	void collisionHandler(Object & obj1, Object& obj2);
+	void resolveCollision(Object& obj1, Object& obj2, Vec2D normal, double pen);
 
 };
 
-//
-//struct = { posx, posy, velX, velY,, accX, accY } (All double)
-//
-//	Force -> acc
-//	Impulse -> Velocity
-//	Gravity
-//
-//	Collision Detection -> Collision Handling -> Collision Reaction
