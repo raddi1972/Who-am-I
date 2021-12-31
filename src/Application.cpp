@@ -26,40 +26,41 @@ Application::Application()
         return;
     }
 
-    m_Image = loadSurface("HollowKnight.bmp");
-
-    m_ImagePosition.x = 0;
-    m_ImagePosition.y = 0;
-    m_ImagePosition.h = 83;
-    m_ImagePosition.w = 83;
-
 
 }
 
 
-void Application::update()
+void Application::loop()
 {
-    bool gameloop = true;
-    while (gameloop)
+    bool keep_window_open = true;
+    while (keep_window_open)
     {
         while (SDL_PollEvent(&m_WindowEvent) > 0)
         {
+            hk.handle_events(m_WindowEvent);
             switch (m_WindowEvent.type)
             {
-            case SDL_QUIT:
-                gameloop = false;
-                break;
+                case SDL_QUIT:
+                    keep_window_open = false;
+                    break;
             }
-            SDL_UpdateWindowSurface(m_Window);
         }
-        m_ImagePosition.x += 1;
+
+        update(1.0 / 60.0);
         draw();
     }
 }
 
+void Application::update(double delta_time)
+{
+    hk.update(delta_time);
+}
+
 void Application::draw()
 {
-    SDL_BlitSurface(m_Image, NULL, m_Surface, &m_ImagePosition);
+    SDL_FillRect(m_Surface, NULL, SDL_MapRGB(m_Surface->format, 255, 255, 255));
+
+    hk.draw(m_Surface);
 
     SDL_UpdateWindowSurface(m_Window);
 }

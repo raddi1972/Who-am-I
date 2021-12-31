@@ -8,8 +8,7 @@ int main(int argc, char* argv[])
 
     // retutns zero on success else non-zero
     Application app;
-    app.update();
-    app.draw();
+    app.loop();
 
 
     return 0;
