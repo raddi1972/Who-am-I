@@ -1,7 +1,7 @@
 #include "HollowKnight.h"
 
 HollowKnight::HollowKnight()
-	: image("HollowKnightSprite.bmp", 12, 12), Object({42, 42}, {0, 0}, 0.5, 85, 85, 1)
+	: image("HollowKnightSprite.bmp", 12, 12), Object({42, 42}, {0, 0}, 0.15, 85, 85, 1)
 {
 	image.selectSprite(0, 0);
 
@@ -29,13 +29,14 @@ void HollowKnight::update(double delta_time)
 		break;
 
 	case Direction::LEFT:
-		if(vel.x >= -10)
-			vel.x += -3;
+		
 		break;
 
 	case Direction::RIGHT:
-		if(vel.x <= 10)
-		vel.x += 3;
+		
+		break;
+	case Direction::UP:
+		
 		break;
 	}
 	m_Direction = Direction::NONE;
@@ -55,14 +56,23 @@ void HollowKnight::handle_events(SDL_Event const& e)
 	case SDL_KEYDOWN:
 		Uint8 const* keys = SDL_GetKeyboardState(nullptr);
 
-		if (keys[SDL_SCANCODE_W] == 1)
-			m_Direction = Direction::UP;
-		else if (keys[SDL_SCANCODE_S] == 1)
-			m_Direction = Direction::DOWN;
-		else if (keys[SDL_SCANCODE_A] == 1)
-			m_Direction = Direction::LEFT;
-		else if (keys[SDL_SCANCODE_D] == 1) {
-			m_Direction = Direction::RIGHT;
+		if (keys[SDL_SCANCODE_SPACE] == 1) {
+			if (vel.y >= 60 || (vel.y >= -1 && vel.y <= 1))
+				vel.y = -70;
+		}
+		if (keys[SDL_SCANCODE_A] == 1) {
+			if (vel.x > 0) {
+				vel.x = 0;
+			}
+			if (vel.x >= -30)
+				vel.x += -20;
+		}
+		if (keys[SDL_SCANCODE_D] == 1) {
+			if (vel.x < 0) {
+				vel.x = 0;
+			}
+			if (vel.x <= 30)
+				vel.x += 20;
 		}
 
 		break;
