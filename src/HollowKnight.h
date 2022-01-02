@@ -12,11 +12,21 @@ enum class Direction
 };
 
 private:
-	Spritesheet image;
+	Spritesheet walker, walker_inv, jumper, jumper_inv;
 	SDL_Rect m_Position;
 	double m_x, m_y;
 
 	double m_MovingRight;
+
+	std::vector<std::pair<int, int>> walk; int w;
+	std::vector<std::pair<int, int>> run; int r;
+	std::vector<std::pair<int, int>> jump; int j;
+	std::vector<std::pair<int, int>> fJump; int f;
+
+	int current;
+
+	double timepassed;
+	
 
 	Direction m_Direction;
 public:
