@@ -162,7 +162,6 @@ void HollowKnight::update(double delta_time)
 
 void HollowKnight::draw(SDL_Surface* surface, int x, int y)
 {
-	if (pos.x <= 418) __debugbreak;
 	m_Position.x = pos.x - 42;
 	m_Position.y = pos.y - 42;
 	if (current == 0) {
