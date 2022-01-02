@@ -25,6 +25,9 @@ bool Physics::detectCollision(const Object& obj1, const Object& obj2) {
 	std::vector<Vec2D> points1 = obj1.getPoints();
 	std::vector<Vec2D> points2 = obj2.getPoints();
 
+	if (!obj1.isCollideable() && !obj2.isCollideable())
+		return false;
+
 	// projections on X
 	double p1XMax = getMax(points1, [](Vec2D v) -> double { return v.x; });
 	double p1XMin = -getMax(points1, [](Vec2D v) -> double { return -v.x; });
@@ -39,9 +42,11 @@ bool Physics::detectCollision(const Object& obj1, const Object& obj2) {
 
 	bool isSeparatedX = p2XMax < p1XMin || p1XMax < p2XMin;
 	bool isSeparatedY = p2YMax < p1YMin || p1YMax < p2YMin;
-	if (isSeparatedX || isSeparatedY) {
+
+	if ((isSeparatedX || isSeparatedY)) {
 		return false;
 	}
+
 	return true;
 }
 
@@ -99,7 +104,7 @@ void Physics::resolveCollision(Object& obj1, Object& obj2, Vec2D normal, double 
 	obj1.setVel({ -impulse.x * obj1.getInvMass(), -impulse.y * obj1.getInvMass()});
 	obj2.setVel({ -impulse.x * obj2.getInvMass(), -impulse.y * obj2.getInvMass() });
 
-	const float percent = 0.2; // usually 20% to 80%
+	const float percent = 0.8; // usually 20% to 80%
 	Vec2D correction = normal * (pen / (obj1.getInvMass() + obj2.getInvMass())* percent);
 	obj1.pos = obj1.pos - correction * obj1.getInvMass();
 	obj2.pos = obj2.pos +  correction * obj2.getInvMass();

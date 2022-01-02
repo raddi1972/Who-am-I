@@ -1,14 +1,14 @@
 #include "HollowKnight.h"
 
 HollowKnight::HollowKnight()
-	: image("HollowKnightSprite.bmp", 12, 12), Object({42, 42}, {0, 0}, 0.15, 85, 85, 1)
+	: image("HollowKnightSprite.bmp", 12, 12), Object({500-42, 400-42}, {0, 0}, 0.15, 84, 84, 1)
 {
 	image.selectSprite(0, 0);
 
 	m_Position.x = 0;
 	m_Position.y = 0;
-	m_Position.w = 85;
-	m_Position.h = 85;
+	m_Position.w = getLength();
+	m_Position.h = getBredth();
 
 	m_x = 0.0;
 	m_y = 0.0;
@@ -42,10 +42,11 @@ void HollowKnight::update(double delta_time)
 	m_Direction = Direction::NONE;
 }
 
-void HollowKnight::draw(SDL_Surface* surface)
+void HollowKnight::draw(SDL_Surface* surface, int x, int y)
 {
-	m_Position.x = pos.x - getLength() / 2;
-	m_Position.y = pos.y - getLength() / 2;
+	if (pos.x <= 418) __debugbreak;
+	m_Position.x = pos.x - 42;
+	m_Position.y = pos.y - 42;
 	image.drawSelectedSprite(surface, &m_Position);
 }
 

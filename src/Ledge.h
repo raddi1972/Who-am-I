@@ -8,8 +8,9 @@ public:
 
 	void update(double delta_time) {}
 	void handle_events(SDL_Event const& e) {}
-	void draw(SDL_Surface* surface) {}
+	void draw(SDL_Surface* surface, int x, int y) override;
 	bool isGravity() override { return false; }
+	bool isCollideable() const { return false; }
 
 };
 

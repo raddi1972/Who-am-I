@@ -33,8 +33,9 @@ public:
 	Object(Vec2D pos, Vec2D vel, double e, double length, double breadth, double mass);
 	virtual void update(double delta_time) = 0;
 	virtual void handle_events(SDL_Event const& e) = 0;
-	virtual void draw(SDL_Surface* surface) = 0;
+	virtual void draw(SDL_Surface* surface, int x, int y) = 0;
 	virtual bool isGravity() { return true; }
+	virtual bool isCollideable() const = 0;
 
 	std::vector<Vec2D> getPoints() const;
 	Vec2D getPos() const { return pos; }

@@ -1,6 +1,6 @@
 #include "Application.h"
 
-Application::Application() : ph()
+Application::Application() : ph(), pakka("pakka.bmp", 1080, 720)
 {
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
         printf("error initializing SDL: %s\n", SDL_GetError());
@@ -26,7 +26,8 @@ Application::Application() : ph()
         return;
     }
     objs.push_back(new HollowKnight());
-    objs.push_back(new Ledge({540, 500} , {0}, 1080, 100));
+    objs.push_back(new Ledge({540, 720} , {0, 0}, 1080, 30));
+    objs.push_back(new Ledge({0, 360} , {0, 0}, 2, 720));
 
 }
 
@@ -65,9 +66,11 @@ void Application::update(double delta_time)
 void Application::draw()
 {
     SDL_FillRect(m_Surface, NULL, SDL_MapRGB(m_Surface->format, 255, 255, 255));
+    pakka.moveMap(0, 0);
+    pakka.drawMap(m_Surface);
 
     for (auto o : objs) {
-        o->draw(m_Surface);
+        o->draw(m_Surface, objs[0]->getPos().x - 500 + 42, objs[0]->getPos().y - 400 + 42);
     }
 
     SDL_UpdateWindowSurface(m_Window);

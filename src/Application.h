@@ -2,6 +2,7 @@
 #include "Core.h"
 #include "HollowKnight.h"
 #include "Ledge.h"
+#include "Map.h"
 #include <chrono>
 
 
@@ -21,6 +22,7 @@ public:
 private:
 	
 	std::vector<Object *> objs;
+	Map pakka;
 
 	SDL_Window* m_Window;
 	SDL_Surface* m_Surface;

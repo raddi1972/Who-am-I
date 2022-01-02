@@ -24,8 +24,9 @@ public:
 	~HollowKnight();
 
 	void update(double delta_time) override;
-	void draw(SDL_Surface* surface) override;
+	void draw(SDL_Surface* surface, int x, int y) override;
 	void handle_events(SDL_Event const& event) override;
-
+	bool isGravity() override { return true; }
+	bool isCollideable() const { return true; }
 };
 
