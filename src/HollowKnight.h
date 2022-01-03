@@ -29,8 +29,10 @@ private:
 	
 
 	Direction m_Direction;
+
+	Object *health; //Pointer to the health indicator object
 public:
-	HollowKnight();
+	HollowKnight(Object *ho);
 	~HollowKnight();
 
 	void update(double delta_time) override;
