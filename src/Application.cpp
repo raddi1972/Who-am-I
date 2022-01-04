@@ -26,9 +26,11 @@ Application::Application() : ph(), pakka("pakka.bmp", 1080, 720)
         return;
     }
     Object *health = new Health();
-    Object *hollowKnight = new HollowKnight(health);
+    Object *scoreCounter = new NDCounter({1028,57});
+    Object *hollowKnight = new HollowKnight(health, scoreCounter);
     objs.push_back(hollowKnight);
     objs.push_back(health);
+    objs.push_back(scoreCounter);
     objs.push_back(new Ledge({540, 720} , {0, 0}, 1080, 42));
     objs.push_back(new Ledge({0, 360} , {0, 0}, 16, 720));
     objs.push_back(new Ledge({1080, 360} , {0, 0}, 12, 720));
