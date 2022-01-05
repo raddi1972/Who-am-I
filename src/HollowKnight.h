@@ -33,8 +33,11 @@ private:
 	double attackTime;
 
 	Direction m_Direction;
+
+	Object *health; //Pointer to the health indicator object
+	Object *scoreCounter; //Pointer to the counter that displays the player's score
 public:
-	HollowKnight();
+	HollowKnight(Object *ho, Object *ScoreCounter);
 	~HollowKnight();
 
 	void update(double delta_time) override;

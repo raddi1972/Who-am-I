@@ -1,9 +1,10 @@
 #include "HollowKnight.h"
 
-HollowKnight::HollowKnight()
-	: walker("walker_inv.bmp", 1, 9), walker_inv("walker.bmp", 1, 9), jumper("jumper.bmp", 1, 12), jumper_inv("jumper_inv.bmp", 1, 12),
-	attacker("attacker.bmp", 1, 6), attacker_inv("attacker_inv.bmp", 1, 6), Object({500 - 42, 400 - 42}, {0, 0}, 0.15, 84, 84, 1)
+HollowKnight::HollowKnight(Object *ho, Object *ScoreCounter)
+	: walker("walker_inv.bmp", 1, 9), walker_inv("walker.bmp", 1, 9), jumper("jumper.bmp", 1, 12), jumper_inv("jumper_inv.bmp", 1, 12), attacker("attacker.bmp", 1, 6), attacker_inv("attacker_inv.bmp", 1, 6), Object({500 - 42, 400 - 42}, {0, 0}, 0.15, 84, 84, 1)
 {
+	health = ho; //Pointer to the health indicator object is being set
+	scoreCounter = ScoreCounter;
 	walker.selectSprite(0, 0);
 	walker_inv.selectSprite(0, 0);
 	jumper.selectSprite(0, 0);
