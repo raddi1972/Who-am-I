@@ -25,7 +25,7 @@ Application::Application() : ph(), pakka("pakka.bmp", 1080, 720)
         std::cout << "SDLError: " << SDL_GetError() << std::endl;
         return;
     }
-    objs.push_back(new HollowKnight());
+    hk = new HollowKnight();
     objs.push_back(new Ledge({540, 720} , {0, 0}, 1080, 42));
     objs.push_back(new Ledge({0, 360} , {0, 0}, 16, 720));
     objs.push_back(new Ledge({1080, 360} , {0, 0}, 12, 720));
@@ -95,9 +95,7 @@ void Application::loop()
     {
         while (SDL_PollEvent(&m_WindowEvent) > 0)
         {
-            for (auto o : objs) {
-                o->handle_events(m_WindowEvent);
-            }
+            hk->handle_events(m_WindowEvent);
             switch (m_WindowEvent.type)
             {
                 case SDL_QUIT:
@@ -113,21 +111,16 @@ void Application::loop()
 
 void Application::update(double delta_time)
 {
-    ph.update(delta_time, objs);
-    for (auto o : objs) {
-        o->update(delta_time);
-    }
+    ph.update(delta_time, objs, hk);
+    hk->update(delta_time);
 }
 
 void Application::draw()
 {
-    SDL_FillRect(m_Surface, NULL, SDL_MapRGB(m_Surface->format, 255, 255, 255));
     pakka.moveMap(0, 0);
     pakka.drawMap(m_Surface);
-
-    for (auto o : objs) {
-        o->draw(m_Surface, objs[0]->getPos().x - 500 + 42, objs[0]->getPos().y - 400 + 42);
-    }
+    
+    hk->draw(m_Surface, objs[0]->getPos().x - 500 + 42, objs[0]->getPos().y - 400 + 42);
 
     SDL_UpdateWindowSurface(m_Window);
 }

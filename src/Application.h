@@ -22,6 +22,7 @@ public:
 private:
 	
 	std::vector<Object *> objs;
+	HollowKnight* hk;
 	Map pakka;
 
 	SDL_Window* m_Window;

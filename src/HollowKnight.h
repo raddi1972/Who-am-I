@@ -12,7 +12,7 @@ enum class Direction
 };
 
 private:
-	Spritesheet walker, walker_inv, jumper, jumper_inv;
+	Spritesheet walker, walker_inv, jumper, jumper_inv, attacker, attacker_inv;
 	SDL_Rect m_Position;
 	double m_x, m_y;
 
@@ -22,11 +22,15 @@ private:
 	std::vector<std::pair<int, int>> run; int r;
 	std::vector<std::pair<int, int>> jump; int j;
 	std::vector<std::pair<int, int>> fJump; int f;
+	std::vector<std::pair<int, int>> attacked;
 
 	int current;
 
 	double timepassed;
-	
+
+	bool isFacingRight;
+	bool isAttackMode;
+	double attackTime;
 
 	Direction m_Direction;
 public:
@@ -38,5 +42,6 @@ public:
 	void handle_events(SDL_Event const& event) override;
 	bool isGravity() override { return true; }
 	bool isCollideable() const { return true; }
+	void attack();
 };
 
