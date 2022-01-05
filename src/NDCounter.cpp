@@ -1,7 +1,12 @@
 #include "NDCounter.h"
 
-NDCounter::NDCounter(Vec2D pos) : Object(pos, {0,0}, 1, 1, 1, 0)
+NDCounter::NDCounter(Vec2D pos) : score("Score.bmp",1,1),Object(pos, {0,0}, 1, 1, 1, 0)
 {
+	score.selectSprite(0,0);
+	m_position.x = 0;
+	m_position.y = 0;
+	m_position.w = 1;
+	m_position.h = 1;
 	SDCounter * d0 = new SDCounter(pos);
 	SDw = d0->getLength();
 	digits.push_back(d0);
@@ -9,6 +14,9 @@ NDCounter::NDCounter(Vec2D pos) : Object(pos, {0,0}, 1, 1, 1, 0)
 
 void NDCounter::draw(SDL_Surface* surface, int x, int y)
 {
+	m_position.x = 941;
+	m_position.y = 15;
+	score.drawSelectedSprite(surface, &m_position);
 	for(auto d:digits)
 	{
 		d->draw(surface , x, y);

@@ -19,4 +19,6 @@ public:
 	private:
 		std::vector<SDCounter *> digits;
 		double SDw;
+		Spritesheet score;
+		SDL_Rect m_position;
 };
