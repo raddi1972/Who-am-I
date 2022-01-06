@@ -96,13 +96,16 @@ void ShootingEnemy::fireReady(Vec2D myPos, Vec2D tPos)
 
 void ShootingEnemy::collideFireBalls(HollowKnight* hk, Physics& p, std::vector<Object*> ledges) {
     for (auto it = fires.begin(); it != fires.end(); it++) {
-        if (p.detectCollision(*hk, **it)) {
-            if(*it)
-            {
-                (dynamic_cast<CannonFire*> (*it))->informCollision();
+        if (*it) {
+            if (p.detectCollision(*hk, **it)) {
+                if(*it)
+                {
+                    (dynamic_cast<CannonFire*> (*it))->informCollision();
+                }
+                hk->reduceHealth();
+                break;
             }
-            hk->reduceHealth();
-            break;
+
         }
     }
 }

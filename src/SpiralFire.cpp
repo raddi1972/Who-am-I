@@ -80,7 +80,7 @@ void SpiralFire::draw(SDL_Surface* surface, int x, int y)
     }
 }
 
-void informCollision()
+void SpiralFire::informCollision()
 {
     collided = true;
 }
