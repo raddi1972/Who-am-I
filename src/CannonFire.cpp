@@ -1,7 +1,7 @@
 #include "CannonFire.h"
 
 CannonFire::CannonFire(Vec2D p, Vec2D v)
-	: propagation("CannonProp.bmp", 1, 4), burst("CannonBurst.bmp", 1, 7), Object(p, v, 0.15, 10, 10, 1)
+	: propagation("CannonProp.bmp", 1, 4), burst("CannonBurst.bmp", 1, 7), Enemy(p, 0.15, 10, 10, 1, 4)
 {
     count = 0;
     timepassed = 0.0;
@@ -67,8 +67,8 @@ int CannonFire::fire(double delta_time)
 
 void CannonFire::draw(SDL_Surface* surface, int x, int y)
 {
-	m_position.x = pos.x;
-	m_position.y = pos.y;
+	m_position.x = pos.x - getLength() / 2;
+	m_position.y = pos.y - getBredth() / 2;
 	if(currentSpriteSheet == 0)
     {
         propagation.drawSelectedSprite(surface, &m_position);

@@ -102,7 +102,7 @@ void Physics::resolveCollision(Object& obj1, Object& obj2, Vec2D normal, double 
 
 	Vec2D impulse = {j * normal.x, j * normal.y};
 	obj1.setVel({ -impulse.x * obj1.getInvMass(), -impulse.y * obj1.getInvMass()});
-	obj2.setVel({ -impulse.x * obj2.getInvMass(), -impulse.y * obj2.getInvMass() });
+	obj2.setVel({ impulse.x * obj2.getInvMass(), impulse.y * obj2.getInvMass() });
 
 	const float percent = 0.8; // usually 20% to 80%
 	Vec2D correction = normal * (pen / (obj1.getInvMass() + obj2.getInvMass())* percent);

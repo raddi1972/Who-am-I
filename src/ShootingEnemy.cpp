@@ -1,7 +1,7 @@
 #include "ShootingEnemy.h"
 
 ShootingEnemy::ShootingEnemy(Vec2D Epos, Object *Target)
-	: shEnemyR("shEnemyRight.bmp", 1, 1), shEnemyL("shEnemyLeft.bmp", 1 ,1), Object(Epos, {0, 0}, 0.15, 53, 85, 1)
+	: shEnemyR("shEnemyRight.bmp", 1, 1), shEnemyL("shEnemyLeft.bmp", 1 ,1), Enemy(Epos, 1, 53, 85, 1, 4)
 {
 	m_Position.x = 0;
 	m_Position.y = 0;
@@ -15,28 +15,20 @@ ShootingEnemy::ShootingEnemy(Vec2D Epos, Object *Target)
     shootingDir.y = (target->pos.y) - (this->pos.y);
     timepassed = 0.0;
     selectSprite = 0;
-	
 }
 
 
 void ShootingEnemy::update(double delta_time)
 {
-    std::vector<CannonFire *>::iterator it;
+    std::vector<Object *>::iterator it;
     it = fires.begin();
     int i;
     for(i=0;i<fires.size();i++)
     {
         if(fires[i])
         {
-            int result = fires[i]->fire(delta_time);
-            if(result == 0)
-            {
-                delete(fires[i]);
-                fires[i] = NULL;
-                it+=i;
-                fires.erase(it);
-                i--;
-            }
+            if(dynamic_cast<CannonFire*> (fires[i]))
+                int result = dynamic_cast<CannonFire *> (fires[i])->fire(delta_time);
         }
     }
 	shootingDir.x = (target->pos.x) - (this->pos.x);
@@ -91,6 +83,17 @@ void ShootingEnemy::fireReady(Vec2D myPos, Vec2D tPos)
     else
     {
         selectSprite = 1;
+    }
+}
+
+void ShootingEnemy::collideFireBalls(HollowKnight* hk, Physics& p, std::vector<Object*> ledges) {
+    for (auto it = fires.begin(); it != fires.end(); it++) {
+        if (p.detectCollision(*hk, **it)) {
+            *it = nullptr;
+            fires.erase(it);
+            hk->reduceHealth();
+            break;
+        }
     }
 }
 

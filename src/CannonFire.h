@@ -5,7 +5,7 @@
 #include "Physics.h"
 #include "Enemy.h"
 
-class CannonFire : public Object
+class CannonFire : public Enemy
 {
 
 private:

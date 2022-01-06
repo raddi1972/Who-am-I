@@ -5,8 +5,9 @@
 #include "Physics.h"
 #include "Health.h"
 #include "CannonFire.h"
+#include "Enemy.h"
 
-class ShootingEnemy : public Object
+class ShootingEnemy : public Enemy
 {
 private:
 	Spritesheet shEnemyR, shEnemyL;
@@ -16,7 +17,7 @@ private:
     int health;
     double timepassed;
     int selectSprite;
-	std::vector<CannonFire *> fires;
+	std::vector<Object *> fires;
 
 
 public:
@@ -30,5 +31,7 @@ public:
 	bool isCollideable() const { return true; }
 	int reduceHealth();
     void fireReady(Vec2D myPos, Vec2D tPos);
+	void collideFireBalls(HollowKnight* hk, Physics& p, std::vector<Object*> ledges);
+
 };
 

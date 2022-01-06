@@ -96,7 +96,7 @@ Application::Application() : ph(), pakka("pakka.bmp", 1080, 720)
 
     // Creating new enemies
     enemies.push_back(new Crawlid({ 231, 652 }, 80, 60));
-
+    enemies.push_back(new ShootingEnemy({ 800,500 }, hk));
 }
 
 
@@ -124,6 +124,15 @@ void Application::loop()
 void Application::update(double delta_time)
 {
     ph.update(delta_time, objs, hk, enemies);
+
+    for (auto obj : enemies) {
+        ShootingEnemy* se = dynamic_cast<ShootingEnemy*> (obj);
+        if(se)
+            se->collideFireBalls(hk, ph, objs);
+        
+
+    }
+
 
     for (auto obj : enemies) {
         if (hk->getAttack()) {
