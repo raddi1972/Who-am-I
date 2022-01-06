@@ -120,7 +120,7 @@ void Application::loop()
             }
         }
 
-        if(timepassed >= 500)
+        if(timepassed >= 400)
         {
             timepassed = 0.0;
             ec->modifyEnemies(enemies);
