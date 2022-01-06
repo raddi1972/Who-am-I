@@ -28,7 +28,7 @@ Application::Application() : ph(), pakka("pakka.bmp", 1080, 720)
 
 
     Health *health = new Health();
-    Object *scoreCounter = new NDCounter({1028,57});
+    NDCounter *scoreCounter = new NDCounter({1028,57});
 
     // Creating the main character
     hk = new HollowKnight(health, scoreCounter);
@@ -145,6 +145,7 @@ void Application::update(double delta_time)
         if (em) {
             if (em->health <= 0) {
                 enemies.erase(enemies.begin() + i);
+                hk->increaseScore();
             }
         }
     }
