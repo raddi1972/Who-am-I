@@ -206,20 +206,24 @@ void Application::update(double delta_time)
 
 void Application::draw()
 {
-    pakka.moveMap(0, 0);
-    pakka.drawMap(m_Surface);
-    
-    hk->draw(m_Surface, objs[0]->getPos().x - 500 + 42, objs[0]->getPos().y - 400 + 42);
-    if(hk->getHealth() == 0)
+    if (hk->getHealth() == 0)
     {
-        gameOver.moveMap(0,0);
+        gameOver.moveMap(0, 0);
         gameOver.drawMap(m_Surface);
     }
-    for (Object* obj : drawables) {
-        obj->draw(m_Surface, 0, 0);
-    }
-    for (auto obj : enemies) {
-        obj->draw(m_Surface, 0, 0);
+    else {
+        pakka.moveMap(0, 0);
+        pakka.drawMap(m_Surface);
+    
+        hk->draw(m_Surface, objs[0]->getPos().x - 500 + 42, objs[0]->getPos().y - 400 + 42);
+    
+        for (Object* obj : drawables) {
+            obj->draw(m_Surface, 0, 0);
+        }
+        for (auto obj : enemies) {
+            obj->draw(m_Surface, 0, 0);
+        }
+
     }
     SDL_UpdateWindowSurface(m_Window);
 }
