@@ -7,6 +7,7 @@
 #include "NDCounter.h"
 #include "Crawlid.h"
 #include "ShootingEnemy.h"
+#include "EnemyController.h"
 #include <chrono>
 
 
@@ -29,6 +30,7 @@ private:
 	std::vector<Object *> enemies;
 	std::vector<Object*> drawables;
  	HollowKnight* hk;
+	EnemyController *ec;
 	Map pakka;
 
 	SDL_Window* m_Window;

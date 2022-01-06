@@ -43,11 +43,14 @@ void ShootingEnemy::update(double delta_time)
     shootingDir.y = (target->pos.y) - (this->pos.y);
     timepassed += delta_time;
     fireReady(this->pos, target->pos);
-    if(timepassed >= 10)
+    if(timepassed >= 15)
     {
         timepassed = 0.0;
         double mag = sqrt((shootingDir.x * shootingDir.x)+(shootingDir.y * shootingDir.y));
-        fires.push_back(new CannonFire(this->pos, {(shootingDir.x/mag)*30, (shootingDir.y/mag)*30}));
+        if(mag <= 500)
+        {
+            fires.push_back(new CannonFire(this->pos, {(shootingDir.x/mag)*30, (shootingDir.y/mag)*30}));
+        }
     }
 }
 
