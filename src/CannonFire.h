@@ -3,6 +3,7 @@
 #include "Spritesheet.h"
 #include <iostream>
 #include "Physics.h"
+#include "Enemy.h"
 
 class CannonFire : public Object
 {

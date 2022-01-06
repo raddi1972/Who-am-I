@@ -9,6 +9,8 @@ CannonFire::CannonFire(Vec2D p, Vec2D v)
 	propagation.selectSprite(count,0);
     burst.selectSprite(0,0);
     currentSpriteSheet = 0;
+    vel.x = v.x;
+    vel.y = v.y;
     initialVel = {v.x, v.y};
 
 	m_position.x = 0;
@@ -50,7 +52,6 @@ int CannonFire::fire(double delta_time)
                 if(count == 7)
                 {
                     destroyed = true;
-                    this->~CannonFire();
                     return 0;
                 }
                 else
