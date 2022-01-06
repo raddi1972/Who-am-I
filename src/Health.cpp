@@ -9,6 +9,7 @@ Health::Health() : healthDisplay("Health_indicator_sprite.bmp", 1, 6), Object({5
 	m_position.y = 0;
 	m_position.w = getLength();
 	m_position.h = getBredth();
+	flag = true;
 	t.start = std::chrono::steady_clock::now();
 }
 
@@ -31,7 +32,7 @@ void Health::update(double delta_time)
 
 void Health::increaseHealth()
 {
-	if(currentHealth < 5)
+	if(currentHealth < 5 && flag)
 	{
 		currentHealth++;
 	}

@@ -1,4 +1,5 @@
 #pragma once
+#include <fstream>
 #include "Core.h"
 #include "HollowKnight.h"
 #include "Ledge.h"
@@ -33,6 +34,8 @@ private:
 	EnemyController *ec;
 	Map pakka;
 	Map gameOver;
+	std::string filename;
+	int filecount;
 
 	SDL_Window* m_Window;
 	SDL_Surface* m_Surface;

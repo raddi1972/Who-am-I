@@ -39,6 +39,8 @@ private:
 
 	Health *health; //Pointer to the health indicator object
 	NDCounter *scoreCounter; //Pointer to the counter that displays the player's score
+
+	int score;
 public:
 	bool isFacingRight;
 	bool isDefenceMode;
@@ -58,6 +60,7 @@ public:
 	Attack* getAttack();
 	void setAttack();
 	void increaseScore();
-	int getHealth();
+	Health* getHealth();
+	int getScore();
 };
 

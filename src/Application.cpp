@@ -26,7 +26,8 @@ Application::Application() : ph(), pakka("pakka.bmp", 1080, 720), gameOver("GAME
         return;
     }
 
-
+    filecount = 0 ;
+    filename = "HighestScores.txt";
     Health *health = new Health();
     NDCounter *scoreCounter = new NDCounter({1028,57});
 
@@ -206,10 +207,19 @@ void Application::update(double delta_time)
 
 void Application::draw()
 {
-    if (hk->getHealth() == 0)
+    if (hk->getHealth()->getHealth() == 0)
     {
+        filecount++;
+        if(filecount == 1)
+        {
+            std::ofstream file_out;
+            file_out.open(filename, std::ios_base::app);
+            file_out << "Highest Score for the game : "<<hk->getScore()<<std::endl;
+            file_out.close();
+        }
         gameOver.moveMap(0, 0);
         gameOver.drawMap(m_Surface);
+        hk->getHealth()->flag=false;
     }
     else {
         pakka.moveMap(0, 0);

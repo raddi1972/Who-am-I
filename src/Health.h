@@ -29,6 +29,7 @@ public:
 	void increaseHealth();
 	int decreaseHealth();
 	int getHealth();
+	bool flag;
 
 	private:
 		Spritesheet healthDisplay;
