@@ -4,6 +4,8 @@
 #include <iostream>
 #include "Physics.h"
 #include "Health.h"
+#include "Attack.h"
+#include "NDCounter.h"
 
 class HollowKnight : public Object
 {
@@ -14,6 +16,7 @@ enum class Direction
 
 private:
 	Spritesheet walker, walker_inv, jumper, jumper_inv, attacker, attacker_inv;
+	Attack* att;
 	SDL_Rect m_Position;
 	double m_x, m_y;
 
@@ -35,13 +38,13 @@ private:
 	Direction m_Direction;
 
 	Health *health; //Pointer to the health indicator object
-	Object *scoreCounter; //Pointer to the counter that displays the player's score
+	NDCounter *scoreCounter; //Pointer to the counter that displays the player's score
 public:
 	bool isFacingRight;
 	bool isDefenceMode;
 	double defenceTimer;
 
-	HollowKnight(Health *ho, Object *ScoreCounter);
+	HollowKnight(Health *ho, NDCounter *ScoreCounter);
 	~HollowKnight();
 
 	void update(double delta_time) override;
@@ -50,6 +53,10 @@ public:
 	bool isGravity() override { return true; }
 	bool isCollideable() const { return true; }
 	void attack();
+
 	void reduceHealth();
+	Attack* getAttack();
+	void setAttack();
+	void increaseScore();
 };
 

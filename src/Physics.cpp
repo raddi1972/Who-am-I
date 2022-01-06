@@ -125,6 +125,7 @@ double Physics::update(double dt, std::vector<Object*> obj, Object* hk, std::vec
 			if (detectCollision(*e, *o)) {
 				std::cout << "Collided" << std::endl;
 				collisionHandler(*e, *o);
+
 			}
 		}
 	}
