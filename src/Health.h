@@ -5,7 +5,6 @@
 #include <ctime>
 #include <ratio>
 #include <chrono>
-#include <unistd.h>
 struct Timer {
     std::chrono::steady_clock::time_point start;
 	std::chrono::steady_clock::time_point end;
@@ -20,6 +19,7 @@ class Health: public Object
 {
 public:
 	Health();
+	~Health() {}
 
 	void update(double delta_time) override;
 	void handle_events(SDL_Event const& e) {}

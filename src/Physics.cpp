@@ -4,7 +4,7 @@
 
 Physics::Physics() {
 	m_fric = 1;
-	m_grav = 9.8;
+	m_grav = 4; 
 }
 
 
@@ -110,42 +110,55 @@ void Physics::resolveCollision(Object& obj1, Object& obj2, Vec2D normal, double 
 	obj2.pos = obj2.pos +  correction * obj2.getInvMass();
 }
 
-double Physics::update(double dt, std::vector<Object*> obj)
+double Physics::update(double dt, std::vector<Object*> obj, Object* hk, std::vector<Object*> enemies)
 {
 
 	for (auto o : obj) {
-		for (auto i : obj) {
-			if (o != i) {
-				if (detectCollision(*o, *i)) {
-					std::cout << "collided" << std::endl;
-					collisionHandler(*o, *i);
-				}
+		if (detectCollision(*o, *hk)) {
+			std::cout << "collided" << std::endl;
+			collisionHandler(*hk, *o);
+		}
+	}
+
+	for (auto e : enemies) {
+		for (auto o : obj) {
+			if (detectCollision(*e, *o)) {
+				std::cout << "Collided" << std::endl;
+				collisionHandler(*e, *o);
 			}
 		}
 	}
 
-	for (auto o : obj) {
-
-		if ((o->vel.x > 0 && m_fric > 0) 
-			|| (o->vel.x < 0 && m_fric < 0)) {
-			m_fric = -m_fric;
-		}
-
-		if (o->vel.x) {
-			o->pos.x += o->vel.x * dt + (m_fric * dt * dt) / 2;
-			o->vel.x += m_fric * dt;
-		}
-
-		if ( (o->vel.x + m_fric * dt < 0 && o->vel.x > 0)
-			|| (o->vel.x + m_fric * dt > 0 && o->vel.x < 0)) {
-			o->vel.x = 0;
-		}
-
-		if (o->isGravity()) {
-			o->pos.y += o->vel.y * dt + (m_grav * dt * dt) / 2;
-			o->vel.y += m_grav * dt;
-		}
-
+	for (auto e : enemies) {
+		e->pos.x += e->vel.x * dt;
 	}
+
+	if ((hk->vel.x > 0 && m_fric > 0) 
+		|| (hk->vel.x < 0 && m_fric < 0)) {
+		m_fric = -m_fric;
+	}
+
+	if (hk->vel.x) {
+		hk->pos.x += hk->vel.x * dt + (m_fric * dt * dt) / 2;
+		hk->vel.x += m_fric * dt;
+	}
+
+	if ( (hk->vel.x + m_fric * dt < 0 && hk->vel.x > 0)
+		|| (hk->vel.x + m_fric * dt > 0 && hk->vel.x < 0)) {
+		hk->vel.x = 0;
+	}
+
+	if (hk->isGravity()) {
+		hk->pos.y += hk->vel.y * dt + (m_grav * dt * dt) / 2;
+		hk->vel.y += m_grav * dt;
+	}
+
+	for (auto e : enemies) {
+		if (e->isGravity()) {
+			e->pos.y += e->vel.y * dt + (m_grav * dt * dt) / 2;
+			e->vel.y += m_grav * dt;
+		}
+	}
+
 	return 0;
 }

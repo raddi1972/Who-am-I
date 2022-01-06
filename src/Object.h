@@ -31,6 +31,9 @@ public:
 	Vec2D vel;
 
 	Object(Vec2D pos, Vec2D vel, double e, double length, double breadth, double mass);
+	virtual ~Object() {}
+
+	// Pure virtual functions 
 	virtual void update(double delta_time) = 0;
 	virtual void handle_events(SDL_Event const& e) = 0;
 	virtual void draw(SDL_Surface* surface, int x, int y) = 0;

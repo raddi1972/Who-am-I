@@ -25,12 +25,15 @@ Application::Application() : ph(), pakka("pakka.bmp", 1080, 720)
         std::cout << "SDLError: " << SDL_GetError() << std::endl;
         return;
     }
-    Object *health = new Health();
+
+
+    Health *health = new Health();
     Object *scoreCounter = new NDCounter({1028,57});
-    Object *hollowKnight = new HollowKnight(health, scoreCounter);
-    objs.push_back(hollowKnight);
-    objs.push_back(health);
-    objs.push_back(scoreCounter);
+
+    // Creating the main character
+    hk = new HollowKnight(health, scoreCounter);
+    drawables.push_back(health);
+    drawables.push_back(scoreCounter);
     objs.push_back(new Ledge({540, 720} , {0, 0}, 1080, 42));
     objs.push_back(new Ledge({0, 360} , {0, 0}, 16, 720));
     objs.push_back(new Ledge({1080, 360} , {0, 0}, 12, 720));
@@ -90,6 +93,10 @@ Application::Application() : ph(), pakka("pakka.bmp", 1080, 720)
     objs.push_back(new Ledge({908, 203} , {0, 0}, 23, 26));
     objs.push_back(new Ledge({921, 232} , {0, 0}, 1, 18));
 
+
+    // Creating new enemies
+    enemies.push_back(new Crawlid({ 231, 652 }, 83, 60));
+
 }
 
 
@@ -100,9 +107,7 @@ void Application::loop()
     {
         while (SDL_PollEvent(&m_WindowEvent) > 0)
         {
-            for (auto o : objs) {
-                o->handle_events(m_WindowEvent);
-            }
+            hk->handle_events(m_WindowEvent);
             switch (m_WindowEvent.type)
             {
                 case SDL_QUIT:
@@ -118,22 +123,52 @@ void Application::loop()
 
 void Application::update(double delta_time)
 {
-    ph.update(delta_time, objs);
-    for (auto o : objs) {
-        o->update(delta_time);
+    ph.update(delta_time, objs, hk, enemies);
+
+    for (auto o : enemies) {
+        if (ph.detectCollision(*o, *hk)) {
+            std::cout << "collided" << std::endl;
+            ph.collisionHandler(*hk, *o);
+            hk->reduceHealth();
+            if (hk->vel.y > 2 || hk->vel.y < -2) {
+                hk->vel.y = -100;
+            }
+            else {
+                if (hk->isFacingRight) {
+                    hk->vel.x = -15;
+                }
+                else {
+                    hk->vel.x = 15;
+                }
+                Crawlid* c = dynamic_cast<Crawlid*> (o);
+                if(c)
+                    c->isFacingRight = !c->isFacingRight;
+            }
+        }
+    }
+
+    hk->update(delta_time);
+    for (auto obj : drawables) {
+        obj->update(delta_time);
+    }
+
+    for (auto obj : enemies) {
+        obj->update(delta_time);
     }
 }
 
 void Application::draw()
 {
-    SDL_FillRect(m_Surface, NULL, SDL_MapRGB(m_Surface->format, 255, 255, 255));
     pakka.moveMap(0, 0);
     pakka.drawMap(m_Surface);
-
-    for (auto o : objs) {
-        o->draw(m_Surface, objs[0]->getPos().x - 500 + 42, objs[0]->getPos().y - 400 + 42);
+    
+    hk->draw(m_Surface, objs[0]->getPos().x - 500 + 42, objs[0]->getPos().y - 400 + 42);
+    for (Object* obj : drawables) {
+        obj->draw(m_Surface, 0, 0);
     }
-
+    for (auto obj : enemies) {
+        obj->draw(m_Surface, 0, 0);
+    }
     SDL_UpdateWindowSurface(m_Window);
 }
 

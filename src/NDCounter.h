@@ -7,7 +7,7 @@ class NDCounter: public Object
 {
 public:
 	NDCounter(Vec2D pos);
-
+	~NDCounter() {}
 	void update(double delta_time) {}
 	void handle_events(SDL_Event const& e) {}
 	void draw(SDL_Surface* surface, int x, int y) override;

@@ -6,6 +6,7 @@ class SDCounter: public Object
 {
 	public:
 		SDCounter(Vec2D pos);
+		~SDCounter() {}
 	
 		void update(double delta_time) {};
 		void handle_events(SDL_Event const& e) {}

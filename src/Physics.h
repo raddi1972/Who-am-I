@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include "Object.h"
+#include "HollowKnight.h"
 
 class Physics
 {
@@ -10,7 +11,7 @@ class Physics
 public:
 
 	Physics();
-	double update(double dt, std::vector<Object*>);
+	double update(double dt, std::vector<Object*>, Object* hk, std::vector<Object*>);
 	double move(double vx);
 	double dash();
 
