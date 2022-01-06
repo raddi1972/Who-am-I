@@ -27,8 +27,16 @@ void ShootingEnemy::update(double delta_time)
     {
         if(fires[i])
         {
+            int result;
             if(dynamic_cast<CannonFire*> (fires[i]))
-                int result = dynamic_cast<CannonFire *> (fires[i])->fire(delta_time);
+            {
+                result = dynamic_cast<CannonFire *> (fires[i])->fire(delta_time);
+            }
+            if(result == 0)
+            {
+                delete(fires[i]);
+                fires[i] = NULL;
+            }
         }
     }
 	shootingDir.x = (target->pos.x) - (this->pos.x);
@@ -89,8 +97,10 @@ void ShootingEnemy::fireReady(Vec2D myPos, Vec2D tPos)
 void ShootingEnemy::collideFireBalls(HollowKnight* hk, Physics& p, std::vector<Object*> ledges) {
     for (auto it = fires.begin(); it != fires.end(); it++) {
         if (p.detectCollision(*hk, **it)) {
-            *it = nullptr;
-            fires.erase(it);
+            if(*it)
+            {
+                (dynamic_cast<CannonFire*> (*it))->informCollision();
+            }
             hk->reduceHealth();
             break;
         }

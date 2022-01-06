@@ -16,6 +16,7 @@ private:
     Vec2D initialVel;
     int count;
     bool destroyed;
+	bool collided;
 	
 public:
 	CannonFire(Vec2D p, Vec2D v);
@@ -27,4 +28,5 @@ public:
 	void handle_events(SDL_Event const& event) {}
 	bool isGravity() override { return false; }
 	bool isCollideable() const { return true; }
+	void informCollision();
 };

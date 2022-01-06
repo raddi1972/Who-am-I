@@ -12,6 +12,7 @@ CannonFire::CannonFire(Vec2D p, Vec2D v)
     vel.x = v.x;
     vel.y = v.y;
     initialVel = {v.x, v.y};
+    collided = false;
 
 	m_position.x = 0;
 	m_position.y = 0;
@@ -27,7 +28,7 @@ int CannonFire::fire(double delta_time)
     if(!destroyed)
     {
 	    timepassed += delta_time;
-        if(((initialVel.x != this->vel.x) || (initialVel.y != this->vel.y)) && currentSpriteSheet == 0)
+        if(((initialVel.x != this->vel.x) || (initialVel.y != this->vel.y) || collided) && currentSpriteSheet == 0)
         {
             currentSpriteSheet = 1;
             timepassed = 0.0;
@@ -79,6 +80,10 @@ void CannonFire::draw(SDL_Surface* surface, int x, int y)
     }
 }
 
+void CannonFire::informCollision()
+{
+    collided = true;
+}
 
 CannonFire::~CannonFire()
 {
