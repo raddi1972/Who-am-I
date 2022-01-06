@@ -4,6 +4,7 @@
 #include <iostream>
 #include "Physics.h"
 #include "Health.h"
+#include "Attack.h"
 
 class HollowKnight : public Object
 {
@@ -14,6 +15,7 @@ enum class Direction
 
 private:
 	Spritesheet walker, walker_inv, jumper, jumper_inv, attacker, attacker_inv;
+	Attack* att;
 	SDL_Rect m_Position;
 	double m_x, m_y;
 
@@ -50,6 +52,9 @@ public:
 	bool isGravity() override { return true; }
 	bool isCollideable() const { return true; }
 	void attack();
+
 	void reduceHealth();
+	Attack* getAttack();
+	void setAttack();
 };
 

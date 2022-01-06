@@ -95,7 +95,7 @@ Application::Application() : ph(), pakka("pakka.bmp", 1080, 720)
 
 
     // Creating new enemies
-    enemies.push_back(new Crawlid({ 231, 652 }, 83, 60));
+    enemies.push_back(new Crawlid({ 231, 652 }, 80, 60));
 
 }
 
@@ -125,6 +125,30 @@ void Application::update(double delta_time)
 {
     ph.update(delta_time, objs, hk, enemies);
 
+    for (auto obj : enemies) {
+        if (hk->getAttack()) {
+            if (ph.detectCollision(*hk->getAttack(), *obj)) {
+                Enemy* em = dynamic_cast<Enemy*> (obj);
+                if (em) {
+                    em->reduceHealth();
+                    delete hk->getAttack();
+                    hk->setAttack();
+                    if (hk->isFacingRight) hk->vel.x -= 15;
+                    else hk->vel.y += 15;
+                }
+            }
+        }
+    }
+
+    for (int i = 0; i < enemies.size(); i++) {
+        Enemy* em = dynamic_cast<Enemy*> (enemies[i]);
+        if (em) {
+            if (em->health <= 0) {
+                enemies.erase(enemies.begin() + i);
+            }
+        }
+    }
+
     for (auto o : enemies) {
         if (ph.detectCollision(*o, *hk)) {
             std::cout << "collided" << std::endl;
@@ -141,8 +165,11 @@ void Application::update(double delta_time)
                     hk->vel.x = 15;
                 }
                 Crawlid* c = dynamic_cast<Crawlid*> (o);
-                if(c)
-                    c->isFacingRight = !c->isFacingRight;
+                if (c) {
+                    if (c->isFacingRight) c->vel.x = -5;
+                    else c->vel.x = 5;
+
+                }
             }
         }
     }

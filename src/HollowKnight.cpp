@@ -64,9 +64,15 @@ void HollowKnight::update(double delta_time)
 	}
 	attackTime += delta_time;
 	if (attackTime >= 2.5 && isAttackMode) {
+		if(att)
+			delete att;
+		att = nullptr;
 		isAttackMode = false;
 	}
 
+	
+	if (att)
+		att->update(delta_time);
 	if (isAttackMode) {
 		if (isFacingRight) {
 			if (attackTime <= 0.4) {
@@ -247,6 +253,8 @@ void HollowKnight::draw(SDL_Surface* surface, int x, int y)
 {
 	m_Position.x = pos.x - getLength() / 2;
 	m_Position.y = pos.y - getBredth()/2;
+	if (att) att->draw(surface, 0, 0);
+
 	if (isAttackMode) {
 		if (isFacingRight)
 			attacker.drawSelectedSprite(surface, &m_Position);
@@ -266,6 +274,7 @@ void HollowKnight::draw(SDL_Surface* surface, int x, int y)
 	else if (current == 3) {
 		jumper_inv.drawSelectedSprite(surface, &m_Position);
 	}
+
 
 	
 }
@@ -313,7 +322,16 @@ void HollowKnight::attack()
 {
 	isAttackMode = true;
 	attackTime = 0;
+	if (isFacingRight) {
+		att = new Attack({ pos.x + getLength() / 2, pos.y });
+		 
+	}
+	else {
+		att = new Attack({ pos.x - (getLength() / 2), pos.y });
+	}
 }
+
+
 
 void HollowKnight::reduceHealth()
 {
@@ -322,6 +340,16 @@ void HollowKnight::reduceHealth()
 		isDefenceMode = true;
 	}
 
+}
+
+Attack* HollowKnight::getAttack()
+{
+	return att;
+}
+
+void HollowKnight::setAttack()
+{
+	att = nullptr;
 }
 
 HollowKnight::~HollowKnight()

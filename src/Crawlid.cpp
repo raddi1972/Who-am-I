@@ -1,7 +1,7 @@
 #include "Crawlid.h"
 
 Crawlid::Crawlid(Vec2D pos, double length, double bredth)
-	:Enemy(pos, 1, length, bredth, 1), walker("crawlid.bmp", 1, 4), walker_inv("crawlid_inv.bmp", 1, 4)
+	:Enemy(pos, 1, length, bredth, 1, 2), walker("crawlid.bmp", 1, 4), walker_inv("crawlid_inv.bmp", 1, 4)
 {
 	m_Position.x = 0;
 	m_Position.y = 0;
@@ -24,13 +24,11 @@ void Crawlid::draw(SDL_Surface* surface, int x, int y)
 {
 	m_Position.x = pos.x - getLength() / 2;
 	m_Position.y = pos.y - getBredth() / 2;
+	m_Position.w = getLength();
+	m_Position.h = getBredth();
 
-	if (isFacingRight) {
-		this->vel.x = 5;
-	}
-	else if(!isFacingRight) {
-		this->vel.x = -5;
-	}
+	if (vel.x < 0 && vel.x > -5) vel.x -= 5;
+	if (vel.x > 0 && vel.x < 5) vel.x += 5;
 
 	if (isFacingRight) {
 		walker_inv.drawSelectedSprite(surface, &m_Position);
@@ -43,6 +41,7 @@ void Crawlid::draw(SDL_Surface* surface, int x, int y)
 void Crawlid::update(double delta_time)
 {
 	timepassed += delta_time;
+
 
 	if (vel.x > 0 && timepassed > 0.5) {
 		w++;
