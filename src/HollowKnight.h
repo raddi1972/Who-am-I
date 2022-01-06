@@ -58,5 +58,6 @@ public:
 	Attack* getAttack();
 	void setAttack();
 	void increaseScore();
+	int getHealth();
 };
 

@@ -47,3 +47,8 @@ int Health::decreaseHealth() //To be called when player gets hit by enemies. Ret
 	healthDisplay.selectSprite(currentHealth, 0);
 	return currentHealth; //currentHealth varies from 0 to 5
 }
+
+int Health::getHealth()
+{
+	return currentHealth;
+}

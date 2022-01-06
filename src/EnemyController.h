@@ -1,13 +1,18 @@
 #pragma once
 #include <vector>
-#include <algorithm>
-#include "Object.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include "HollowKnight.h"
+#include "Crawlid.h"
+#include "ShootingEnemy.h"
 class EnemyController
 {
     private:
         std::vector<Object *> eList;
+        HollowKnight *target;
     public:
-        EnemyController(std::vector<Object *> enemies);
+        EnemyController(HollowKnight * hk);
         ~EnemyController() {}
 
         void modifyEnemies(std::vector<Object *> &enemies);

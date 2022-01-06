@@ -28,6 +28,7 @@ public:
 	bool isCollideable() const { return false; }
 	void increaseHealth();
 	int decreaseHealth();
+	int getHealth();
 
 	private:
 		Spritesheet healthDisplay;

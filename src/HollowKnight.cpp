@@ -356,6 +356,11 @@ void HollowKnight::increaseScore() {
 	scoreCounter->increaseCount();
 }
 
+int HollowKnight::getHealth()
+{
+	return health->getHealth();
+}
+
 HollowKnight::~HollowKnight()
 {
 }

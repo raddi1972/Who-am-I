@@ -1,6 +1,6 @@
 #include "Application.h"
 
-Application::Application() : ph(), pakka("pakka.bmp", 1080, 720)
+Application::Application() : ph(), pakka("pakka.bmp", 1080, 720), gameOver("GAME_OVER.bmp", 1080, 720)
 {
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
         printf("error initializing SDL: %s\n", SDL_GetError());
@@ -32,6 +32,7 @@ Application::Application() : ph(), pakka("pakka.bmp", 1080, 720)
 
     // Creating the main character
     hk = new HollowKnight(health, scoreCounter);
+    ec = new EnemyController(hk);
     drawables.push_back(health);
     drawables.push_back(scoreCounter);
     objs.push_back(new Ledge({540, 720} , {0, 0}, 1080, 42));
@@ -97,15 +98,7 @@ Application::Application() : ph(), pakka("pakka.bmp", 1080, 720)
     // Creating new enemies
     enemies.push_back(new Crawlid({ 231, 652 }, 80, 60));
     enemies.push_back(new Crawlid({ 849, 652 }, 80, 60));
-    enemies.push_back(new ShootingEnemy({ 800,50 }, hk));
-    enemies.push_back(new ShootingEnemy({ 84,345 }, hk));
-    enemies.push_back(new ShootingEnemy({ 300,500 }, hk));
-    enemies.push_back(new ShootingEnemy({ 200,200 }, hk));
-    enemies.push_back(new ShootingEnemy({ 600,100 }, hk));
-    enemies.push_back(new ShootingEnemy({ 450,50 }, hk));
-
-
-    ec = new EnemyController(enemies);
+    enemies.push_back(new ShootingEnemy({ 800,500 }, hk));
 }
 
 
@@ -127,7 +120,7 @@ void Application::loop()
             }
         }
 
-        if(timepassed >= 2000)
+        if(timepassed >= 500)
         {
             timepassed = 0.0;
             ec->modifyEnemies(enemies);
@@ -217,6 +210,11 @@ void Application::draw()
     pakka.drawMap(m_Surface);
     
     hk->draw(m_Surface, objs[0]->getPos().x - 500 + 42, objs[0]->getPos().y - 400 + 42);
+    if(hk->getHealth() == 0)
+    {
+        gameOver.moveMap(0,0);
+        gameOver.drawMap(m_Surface);
+    }
     for (Object* obj : drawables) {
         obj->draw(m_Surface, 0, 0);
     }

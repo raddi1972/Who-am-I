@@ -1,31 +1,23 @@
 #include "EnemyController.h"
 
-EnemyController::EnemyController(std::vector<Object *> enemies)
+EnemyController::EnemyController(HollowKnight *hk)
 {
-    int i;
-    for(i=0;i<enemies.size();i++)
-    {
-        eList.push_back(enemies[i]);
-    }
+    target = hk;
 }
 void EnemyController::modifyEnemies(std::vector<Object *> &enemies)
 {
-    for(int i=0;i<enemies.size();i++)
+    srand(time(0));
+    int randDecision = rand()%2;
+    if(randDecision == 0) //Adding a crawlid enemy
     {
-        delete(enemies[i]);
-        enemies[i]=NULL;
+        double randLength = (rand()%880)+100;
+        double randBreadth = (rand()%520) + 100;
+        enemies.push_back(new Crawlid({randLength, randBreadth}, 80, 60));
     }
-    enemies.clear();
-    std::vector<Object *>::iterator it;
-    it = eList.begin();
-    std::vector<int> indices;
-    for(int i=0;i<eList.size();i++)
+    else if(randDecision == 1) //Adding a shooting enemy
     {
-        indices.push_back(i);
-    }
-    std::random_shuffle(indices.begin(), indices.end());
-    for(int i=0;i<3;i++)
-    {
-        enemies.push_back(eList[indices[i]]);
+        double randLength = (rand()%880)+100;
+        double randBreadth = (rand()%520) + 100;
+        enemies.push_back(new ShootingEnemy({randLength, randBreadth}, target));
     }
 }

@@ -32,6 +32,7 @@ private:
  	HollowKnight* hk;
 	EnemyController *ec;
 	Map pakka;
+	Map gameOver;
 
 	SDL_Window* m_Window;
 	SDL_Surface* m_Surface;
