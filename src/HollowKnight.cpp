@@ -1,6 +1,6 @@
 #include "HollowKnight.h"
 
-HollowKnight::HollowKnight(Object *ho, Object *ScoreCounter)
+HollowKnight::HollowKnight(Health *ho, Object *ScoreCounter)
 	: walker("walker_inv.bmp", 1, 9), walker_inv("walker.bmp", 1, 9), jumper("jumper.bmp", 1, 12), jumper_inv("jumper_inv.bmp", 1, 12), attacker("attacker.bmp", 1, 6), attacker_inv("attacker_inv.bmp", 1, 6), Object({500 - 42, 400 - 42}, {0, 0}, 0.15, 84, 84, 1)
 {
 	health = ho; //Pointer to the health indicator object is being set
@@ -47,6 +47,8 @@ HollowKnight::HollowKnight(Object *ho, Object *ScoreCounter)
 	attacked.push_back(std::pair<int, int>(5, 0));
 
 	timepassed = 0;
+	defenceTimer = 0;
+	isDefenceMode = false;
 	current = 0;
 }
 
@@ -54,6 +56,12 @@ HollowKnight::HollowKnight(Object *ho, Object *ScoreCounter)
 void HollowKnight::update(double delta_time)
 {
 	timepassed += delta_time;
+	if(isDefenceMode)
+		defenceTimer += delta_time;
+	if (defenceTimer >= 10 && isDefenceMode) {
+		isDefenceMode = false;
+		defenceTimer = 0;
+	}
 	attackTime += delta_time;
 	if (attackTime >= 2.5 && isAttackMode) {
 		isAttackMode = false;
@@ -237,8 +245,8 @@ void HollowKnight::update(double delta_time)
 
 void HollowKnight::draw(SDL_Surface* surface, int x, int y)
 {
-	m_Position.x = pos.x - 42;
-	m_Position.y = pos.y - 42;
+	m_Position.x = pos.x - getLength() / 2;
+	m_Position.y = pos.y - getBredth()/2;
 	if (isAttackMode) {
 		if (isFacingRight)
 			attacker.drawSelectedSprite(surface, &m_Position);
@@ -299,10 +307,21 @@ void HollowKnight::handle_events(SDL_Event const& e)
 	}
 }
 
+
+
 void HollowKnight::attack()
 {
 	isAttackMode = true;
 	attackTime = 0;
+}
+
+void HollowKnight::reduceHealth()
+{
+	if (!isDefenceMode) {
+		health->decreaseHealth();
+		isDefenceMode = true;
+	}
+
 }
 
 HollowKnight::~HollowKnight()

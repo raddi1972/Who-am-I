@@ -5,6 +5,7 @@ class Ledge :
 {
 public:
 	Ledge(Vec2D pos, Vec2D vel, double length, double breadth);
+	~Ledge() override {}
 
 	void update(double delta_time) {}
 	void handle_events(SDL_Event const& e) {}

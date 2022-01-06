@@ -110,7 +110,7 @@ void Physics::resolveCollision(Object& obj1, Object& obj2, Vec2D normal, double 
 	obj2.pos = obj2.pos +  correction * obj2.getInvMass();
 }
 
-double Physics::update(double dt, std::vector<Object*> obj, Object* hk)
+double Physics::update(double dt, std::vector<Object*> obj, Object* hk, std::vector<Object*> enemies)
 {
 
 	for (auto o : obj) {
@@ -120,6 +120,18 @@ double Physics::update(double dt, std::vector<Object*> obj, Object* hk)
 		}
 	}
 
+	for (auto e : enemies) {
+		for (auto o : obj) {
+			if (detectCollision(*e, *o)) {
+				std::cout << "Collided" << std::endl;
+				collisionHandler(*e, *o);
+			}
+		}
+	}
+
+	for (auto e : enemies) {
+		e->pos.x += e->vel.x * dt;
+	}
 
 	if ((hk->vel.x > 0 && m_fric > 0) 
 		|| (hk->vel.x < 0 && m_fric < 0)) {
@@ -139,6 +151,13 @@ double Physics::update(double dt, std::vector<Object*> obj, Object* hk)
 	if (hk->isGravity()) {
 		hk->pos.y += hk->vel.y * dt + (m_grav * dt * dt) / 2;
 		hk->vel.y += m_grav * dt;
+	}
+
+	for (auto e : enemies) {
+		if (e->isGravity()) {
+			e->pos.y += e->vel.y * dt + (m_grav * dt * dt) / 2;
+			e->vel.y += m_grav * dt;
+		}
 	}
 
 	return 0;

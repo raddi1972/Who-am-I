@@ -5,6 +5,7 @@
 #include "Map.h"
 #include "Health.h"
 #include "NDCounter.h"
+#include "Crawlid.h"
 #include <chrono>
 
 
@@ -24,7 +25,9 @@ public:
 private:
 	
 	std::vector<Object *> objs;
-	HollowKnight* hk;
+	std::vector<Object *> enemies;
+	std::vector<Object*> drawables;
+ 	HollowKnight* hk;
 	Map pakka;
 
 	SDL_Window* m_Window;

@@ -3,6 +3,7 @@
 #include "Spritesheet.h"
 #include <iostream>
 #include "Physics.h"
+#include "Health.h"
 
 class HollowKnight : public Object
 {
@@ -28,16 +29,19 @@ private:
 
 	double timepassed;
 
-	bool isFacingRight;
 	bool isAttackMode;
 	double attackTime;
 
 	Direction m_Direction;
 
-	Object *health; //Pointer to the health indicator object
+	Health *health; //Pointer to the health indicator object
 	Object *scoreCounter; //Pointer to the counter that displays the player's score
 public:
-	HollowKnight(Object *ho, Object *ScoreCounter);
+	bool isFacingRight;
+	bool isDefenceMode;
+	double defenceTimer;
+
+	HollowKnight(Health *ho, Object *ScoreCounter);
 	~HollowKnight();
 
 	void update(double delta_time) override;
@@ -46,5 +50,6 @@ public:
 	bool isGravity() override { return true; }
 	bool isCollideable() const { return true; }
 	void attack();
+	void reduceHealth();
 };
 

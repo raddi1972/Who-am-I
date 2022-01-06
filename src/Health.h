@@ -19,6 +19,7 @@ class Health: public Object
 {
 public:
 	Health();
+	~Health() {}
 
 	void update(double delta_time) override;
 	void handle_events(SDL_Event const& e) {}
